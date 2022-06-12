@@ -1,0 +1,72 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} ECIP-T-05 {% endblock %}
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+<div class="container-fluid py-4 p-4">
+    <div class="row min-vh-80 h-100">
+        <div class="col-12">
+
+            <div class="row">
+               <div class="col-12 text-center">
+                    <img src="{{ ASSETS_ROOT }}/images/tipbot_banner.png" class="img-fluid">
+                    <hr>
+                </div>
+            </div>
+
+            <div class="row justify-content-center">
+                <div class="col-12" style="max-width: 700px">
+                    <h1 class="font-weight-bold">Tip-Bot  & Web Wallet</h1>
+                    <p class="fs-4 mt-3">
+                        Introduce the power of the <b>Mimblewimble</b> with modern interface and no system requirements.
+                    </p>
+                    <div class="text-center mt-5">
+                        <a href="https://t.me/epictipbot" target="_blank" style="width: 90%"
+                           class="btn btn-lg btn-outline-primary shadow-primary text-dark">
+                            <i class="fab fa-telegram mx-1"></i> Telegram
+                            <span class="text-info">@EpicTipBot </span>
+                            - try now!
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!--            MILESTONES -->
+            <div class="row justify-content-center mt-5">
+                <div class="col-12" style="max-width: 700px">
+                    {% include 'includes/milestones.html' %}
+                </div>
+            </div>
+
+            <!--            FUNDING -->
+            <div class="row justify-content-center mt-5">
+                <div class="col-12" style="max-width: 700px">
+                    {% include 'includes/funding.html' %}
+                </div>
+            </div>
+
+            <!--            PAYMENT METHODS -->
+            <div class="row justify-content-center mt-5">
+                <div class="col-12" style="max-width: 700px">
+                    {% include 'includes/payment_methods.html' %}
+                </div>
+            </div>
+
+            <!--            FOOTER -->
+            <div class="row justify-content-center">
+                <div class="col-12" style="max-width: 700px">
+                    {% include 'includes/footer.html' %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}
