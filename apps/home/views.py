@@ -12,7 +12,7 @@ from django.urls import reverse
 
 # @login_required(login_url="/login/")
 def index(request):
-    context = {'HOME_ASSET_ROOT': 'static/home_assets'}
+    context = {'HOME_ASSET_ROOT': 'static/home_assets', 'segment': 'index'}
 
     html_template = loader.get_template('home/home_page.html')
     return HttpResponse(html_template.render(context, request))
