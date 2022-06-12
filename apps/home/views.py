@@ -12,13 +12,20 @@ from django.urls import reverse
 
 # @login_required(login_url="/login/")
 def index(request):
+    context = {'HOME_ASSET_ROOT': 'static/home_assets'}
+
+    html_template = loader.get_template('home/home_page.html')
+    return HttpResponse(html_template.render(context, request))
+
+
+def funding(request):
     context = {'segment': 'index'}
 
     html_template = loader.get_template('home/ecip-t-05.html')
     return HttpResponse(html_template.render(context, request))
 
 
-@login_required(login_url="/login/")
+# @login_required(login_url="/login/")
 def pages(request):
     context = {}
     # All resource paths end in .html.

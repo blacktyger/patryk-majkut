@@ -25,6 +25,7 @@ DEBUG = env('DEBUG')
 
 # Assets Management
 ASSETS_ROOT = os.getenv('ASSETS_ROOT', '/static/assets')
+HOME_ASSET_ROOT = '/static/home_assets'
 
 # load production server from .env
 ALLOWED_HOSTS = ['*', 'localhost', 'localhost:85', '127.0.0.1', env('SERVER', default='127.0.0.1')]
