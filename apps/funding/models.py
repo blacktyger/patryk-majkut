@@ -5,7 +5,7 @@ from django.db import models
 
 
 class FundingWalletBalance(models.Model):
-    timestamp = models.DateTimeField(auto_now_add=True)
+    timestamp = models.DateTimeField(editable=True)
     balances = models.JSONField(default=dict)
     num_of_transactions = models.IntegerField(default=0)
     pending_transactions = models.IntegerField(default=0)
