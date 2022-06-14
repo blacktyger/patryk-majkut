@@ -1,9 +1,12 @@
+{% load humanize %}
+
 <div class="card my-4">
     <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
         <div class="bg-gradient-info shadow-info border-radius-lg pt-4 pb-3">
-            <h5 class="text-white text-capitalize ps-3">Project Funding</h5>
+            <span class="text-white text-capitalize ps-3 fs-4">Project Funding</span>
         </div>
     </div>
+    <div class="text-end text-xs mt-2 px-4">Last update: {{last_update|naturaltime}}</div>
 
     <div class="card-body px-0 pb-2">
         <div class="row p-3">

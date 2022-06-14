@@ -9,7 +9,6 @@ from django.shortcuts import render
 from .models import FundingWalletTransaction, FundingWalletBalance
 
 def home(request):
-
     def prices():
         try:
             url = 'https://epic-radar.com/api/coingecko/'
@@ -48,6 +47,7 @@ def home(request):
         'received_percent': received_in_percent(goal=5000),
         'milestone_goal': '5 000',
         'total_payments': total_payments(),
+        'last_update': FundingWalletBalance.objects.last().timestamp,
         'history': transaction_history(),
         'total': total_received_funds_in_usd()  # rounded in USD
         }
