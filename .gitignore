@@ -29,3 +29,8 @@ apps/static/assets/node_modules
 apps/static/assets/yarn.lock
 apps/static/assets/.temp
 
+/.gitignore
+/secret.py
+/apps/authentication/migrations/
+/apps/home/migrations/
+/apps/funding/migrations/
