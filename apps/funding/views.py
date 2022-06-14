@@ -42,7 +42,7 @@ def home(request):
         return int(sum(parsed_balances))
 
     def transaction_history():
-        return FundingWalletTransaction.objects.filter(amount__gt=0.9)
+        return FundingWalletTransaction.objects.filter(amount__gt=0.9).order_by('-timestamp')
 
     context = {
         'received_percent': received_in_percent(goal=5000),
