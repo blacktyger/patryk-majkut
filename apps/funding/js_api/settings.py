@@ -9,6 +9,8 @@ else:
     API_URL = 'http://localhost:8666/funding'
 
 
+REFRESH_TIME = 60 * 5
+
 TOKENS = [('tti_b90c9baffffc9dae58d1f33f', 'BTC-000'),
           ('tti_f370fadb275bc2a1a839c753', 'EPIC-002'),
           ('tti_80f3751485e4e83456059473', 'USDT-000')]

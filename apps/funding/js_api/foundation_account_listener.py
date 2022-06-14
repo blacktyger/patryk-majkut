@@ -13,7 +13,7 @@ if __name__ == "__main__":
 
     while True:
         if not first_run:
-            time.sleep(5)
+            time.sleep(REFRESH_TIME)
 
         first_run = False
 
