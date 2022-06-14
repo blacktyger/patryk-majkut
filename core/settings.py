@@ -1,9 +1,11 @@
-# -*- encoding: utf-8 -*-
-"""
-Copyright (c) 2019 - present AppSeed.us
-"""
-
 import os, environ
+import platform
+
+
+if 'Win' in platform.system():
+    DEBUG = True
+else:
+    DEBUG = False
 
 env = environ.Env(
     # set casting, default value
@@ -19,9 +21,6 @@ environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = env('SECRET_KEY', default='S#dsaqw2323434244%&%^7$%67%54^%Y^%h')
-
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = env('DEBUG')
 
 # Assets Management
 ASSETS_ROOT = os.getenv('ASSETS_ROOT', '/static/assets')
