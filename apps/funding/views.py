@@ -70,7 +70,7 @@ def balance(request):
             print(f"NEW RECORD: {update}")
         else:
             update.timestamp = datetime.now()
-            # print(f"UPDATED RECORD: {update}")
+            update.save()
 
     elif request.method == 'GET':
         print(request.GET)
