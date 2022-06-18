@@ -1,5 +1,6 @@
-import os, environ
 import platform
+import environ
+import os
 
 
 if 'Win' in platform.system():
@@ -16,6 +17,7 @@ env = environ.Env(
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 CORE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 print(CORE_DIR)
+
 # Take environment variables from .env file
 environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
 
