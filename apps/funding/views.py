@@ -59,6 +59,7 @@ def home(request):
 def balance(request):
     if request.method == 'POST':
         data = {
+            'timestamp': datetime.now(),
             'pending_transactions': int(request.POST.get('pending_transactions')),
             'num_of_transactions': int(request.POST.get('num_of_transactions')),
             'balances': json.loads(request.POST.get('balances')),
