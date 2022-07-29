@@ -53,14 +53,15 @@ if __name__ == "__main__":
             processed_transactions = []
 
             for transaction in response['data']:
-                processed_transactions.append({
-                    'timestamp': transaction['timestamp'],
-                    'amount': int(transaction['amount']) / 10 ** int(transaction['tokenInfo']['decimals']),
-                    'height': transaction['height'],
-                    'token': transaction['tokenInfo']['tokenSymbol'],
-                    'hash': transaction['hash'],
-                    })
-            response['data'] = processed_transactions
+                if transaction['blockType'] == 4:
+                    processed_transactions.append({
+                        'timestamp': transaction['timestamp'],
+                        'amount': int(transaction['amount']) / 10 ** int(transaction['tokenInfo']['decimals']),
+                        'height': transaction['height'],
+                        'token': transaction['tokenInfo']['tokenSymbol'],
+                        'hash': transaction['hash'],
+                        })
+                response['data'] = processed_transactions
 
             for transaction in processed_transactions:
                 # Send POST request with new transaction to django database

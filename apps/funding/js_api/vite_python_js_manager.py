@@ -4,12 +4,16 @@ https://github.com/vitelabs/vite.js
 https://docs.vite.org/vite-docs/vite.js/
 """
 import subprocess
+import logging
 import time
+from pprint import pprint
 
+from secret import ADDRESS
 from settings import JS_HANDLER_PATH
 
 
 SCRIPT_PATH = JS_HANDLER_PATH
+logger = logging.getLogger('fund_listener')
 
 
 class ViteConnector:
@@ -253,3 +257,11 @@ class ViteConnector:
             except Exception as e:
                 self.logger.warning(f"_get_last_tx_id(): {e}")
         return 0
+
+
+provider = ViteConnector(logger)
+
+x = provider.transactions(address=ADDRESS, page_index=0, page_size=20)
+
+for tx in x:
+    pprint(x)
