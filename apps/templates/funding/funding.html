@@ -73,7 +73,7 @@
 
                                     <div class="col-6 text-end">
                                         <p class="mb-0 text-xs font-weight-bold">
-                                            <span class=" text-danger">${{total}}</span>
+                                            <span class=" text-warning">${{total}}</span>
                                                 /
                                             <span class=" text-dark">{{milestone_goal}} </span>
                                         </p>
@@ -81,7 +81,7 @@
                                 </div>
                             </div>
                             <div class="progress">
-                                <div class="progress-bar bg-gradient-danger" style="width: {{received_percent}}%;" role="progressbar"
+                                <div class="progress-bar bg-gradient-warning" style="width: {{received_percent}}%;" role="progressbar"
                                      aria-valuenow="{{received_percent}}" aria-valuemin="0" aria-valuemax="100">
                                 </div>
                             </div>
@@ -107,7 +107,7 @@
                     <td>
                         <div class="d-flex px-2 py-1">
                            <div class="d-flex flex-column justify-content-center">
-                               <h5 class="mb-2">Tip-Bot v1</h5>
+                               <h5 class="mb-2 text-success">Tip-Bot v1</h5>
                            </div>
                         </div>
                     </td>
@@ -135,7 +135,7 @@
                     <td>
                         <div class="d-flex px-2 py-1">
                            <div class="d-flex flex-column justify-content-center">
-                               <h5 class="mb-2">Tip-Bot v2</h5>
+                               <h5 class="mb-2 text-success">Tip-Bot v2</h5>
                            </div>
                         </div>
                     </td>
@@ -146,12 +146,12 @@
                         <div class="progress-wrapper w-75">
                             <div class="progress-info">
                                 <div class="progress-percentage text-end ">
-                                    <span class="text-xs font-weight-bold">9%</span>
+                                    <span class="text-xs font-weight-bold">{{received_percent}}%</span>
                                 </div>
                             </div>
                             <div class="progress">
-                                <div class="progress-bar bg-gradient-danger" style="width: 9%;" role="progressbar"
-                                     aria-valuenow="9" aria-valuemin="0" aria-valuemax="100">
+                                <div class="progress-bar bg-gradient-warning" style="width: {{received_percent}}%;" role="progressbar"
+                                     aria-valuenow="{{received_percent}}" aria-valuemin="0" aria-valuemax="100">
                                 </div>
                             </div>
                         </div>
@@ -163,7 +163,7 @@
                     <td>
                         <div class="d-flex px-2 py-1">
                            <div class="d-flex flex-column justify-content-center">
-                               <h5 class="mb-2">Tip-Bot v3</h5>
+                               <h5 class="mb-2 text-warning">Tip-Bot v3</h5>
                            </div>
                         </div>
                     </td>

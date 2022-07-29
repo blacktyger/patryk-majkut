@@ -1,10 +1,16 @@
+import json
 import time
+import logging
 
 import requests
 
-from secret import MNEMONICS, ADDRESS_ID
-from vite_python_js_manager import *
+from secret import MNEMONICS, ADDRESS_ID, ADDRESS
+from vite_python_js_manager import ViteConnector
 from settings import *
+
+
+logger = logging.getLogger('fund_listener')
+provider = ViteConnector(logger)
 
 
 if __name__ == "__main__":
@@ -17,47 +23,70 @@ if __name__ == "__main__":
 
         first_run = False
 
-        try:
-            balance_call = call_balance(JS_HANDLER_PATH, MNEMONICS, ADDRESS_ID)
+        print(f'get balance')
+        balance_call = provider.balance(address=ADDRESS)
 
-            if balance_call['error']:
-                print(f'error: {balance_call["msg"]}')
+        if balance_call['error']:
+            print(f'error: {balance_call["msg"]}')
+            continue
+
+        pending = int(balance_call['data']['unreceived']['blockCount'])
+
+        if pending:
+            print('Pending')
+            # If new pending transactions update account
+            update_call = provider.update(mnemonics=MNEMONICS, address_id=ADDRESS_ID)
+
+            if update_call['error']:
+                print(f'update: {update_call["msg"]}')
                 continue
 
-            print(balance_call['msg'])
+            print(update_call["data"])
 
-            if balance_call['data']['pending_transactions']:
-                # If new pending transactions update account
-                update_call = call_update(JS_HANDLER_PATH, MNEMONICS, ADDRESS_ID)
+            print('get transactions')
+            response = provider.transactions(address=ADDRESS, page_index=0, page_size=20)
 
-                if update_call['error']:
-                    print(f'error: {update_call["msg"]}')
-                    continue
+            if response['error']:
+                print(f'transactions: {response["msg"]}')
+                continue
 
-                print(update_call['msg'])
+            processed_transactions = []
 
-                new_transactions = call_transactions(JS_HANDLER_PATH,
-                                                     address=balance_call['data']['address'],
-                                                     size=update_call["data"]['new'])
+            for transaction in response['data']:
+                processed_transactions.append({
+                    'timestamp': transaction['timestamp'],
+                    'amount': int(transaction['amount']) / 10 ** int(transaction['tokenInfo']['decimals']),
+                    'height': transaction['height'],
+                    'token': transaction['tokenInfo']['tokenSymbol'],
+                    'hash': transaction['hash'],
+                    })
+            response['data'] = processed_transactions
 
-                if new_transactions['error']:
-                    print(f'error: {new_transactions["msg"]}')
-                    continue
+            for transaction in processed_transactions:
+                # Send POST request with new transaction to django database
+                print(transaction)
+                requests.post(f"{API_URL}/transactions", data=transaction)
 
-                for transaction in new_transactions['data']:
-                    # Send POST request with new transaction to django database
-                    requests.post(f"{API_URL}/transactions", data=transaction)
-                    print(transaction)
+            # Refresh balance again
+            balance_call = provider.balance(address=ADDRESS)
 
-                # Refresh balance again
-                balance_call = call_balance(JS_HANDLER_PATH, MNEMONICS, ADDRESS_ID)
-
+            print(balance_call)
             # To send nested dicts as POST params we have to json.dumps()
-            balance_call['data']['balances'] = json.dumps(balance_call['data']['balances'])
 
-            # Send POST request with updated balance to django database
-            requests.post(f"{API_URL}/balance", data=balance_call['data'])
+        data = balance_call['data']['balance']
+        pending = int(balance_call['data']['unreceived']['blockCount'])
 
-        except Exception as e:
-            print(f'ERROR: {str(e)}')
-            continue
+        balance_call['data'] = {}
+
+        for id, symbol in TOKENS:
+            if id in data['balanceInfoMap']:
+                int_balance = int(data['balanceInfoMap'][id]['balance'])
+                decimals = data['balanceInfoMap'][id]['tokenInfo']['decimals']
+                balance_call['data'][symbol] = int_balance / 10 ** decimals
+
+        # Send POST request with updated balance to django database
+        requests.post(f"{API_URL}/balance", data=balance_call['data'])
+
+        # except Exception as e:
+        #     print(f'ERROR: {str(e)}')
+        #     continue

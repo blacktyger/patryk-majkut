@@ -31,6 +31,7 @@ apps/static/assets/.temp
 
 /.gitignore
 /secret.py
+/apps/funding/js_api/secret.py
 /apps/authentication/migrations/
 /apps/home/migrations/
 /apps/funding/migrations/

@@ -27,21 +27,15 @@ def home(request):
         return round(total_received_funds_in_usd() / float(goal) * 100, 1)
 
     def total_received_funds_in_usd():
-        latest_balance = FundingWalletBalance.objects.last().balances
-        parsed_balances = []
-
-        for token, amount in latest_balance.items():
-            token = token.split('-')[0].lower()
-
-            if 'usd' not in token:
-                amount = Decimal(amount) * Decimal(prices()[f'{token}_vs_usd'])
-
-            parsed_balances.append(amount)
-
-        return int(sum(parsed_balances))
+        amount = balance_from_transactions() * Decimal(prices()[f'epic_vs_usd'])
+        return int(amount)
 
     def transaction_history():
         return FundingWalletTransaction.objects.filter(amount__gt=0.9).order_by('-timestamp')
+
+    def balance_from_transactions():
+        txs = transaction_history()
+        return Decimal(sum([tx.amount for tx in txs]))
 
     context = {
         'received_percent': received_in_percent(goal=5000),
@@ -57,12 +51,11 @@ def home(request):
 
 
 def balance(request):
+    print('-----------------', request.POST)
     if request.method == 'POST':
         data = {
-            'timestamp': datetime.now(),
-            'pending_transactions': int(request.POST.get('pending_transactions')),
-            'num_of_transactions': int(request.POST.get('num_of_transactions')),
-            'balances': json.loads(request.POST.get('balances')),
+            'timestamp': datetime.utcnow(),
+            'balances': {'EPIC-002': json.loads(request.POST.get('EPIC-002'))},
             }
 
         # Create or update new FundingWalletBalance object
