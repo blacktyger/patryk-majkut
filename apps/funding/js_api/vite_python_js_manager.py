@@ -258,10 +258,3 @@ class ViteConnector:
                 self.logger.warning(f"_get_last_tx_id(): {e}")
         return 0
 
-
-provider = ViteConnector(logger)
-
-x = provider.transactions(address=ADDRESS, page_index=0, page_size=20)
-
-for tx in x:
-    pprint(x)

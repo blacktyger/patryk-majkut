@@ -51,7 +51,6 @@ def home(request):
 
 
 def balance(request):
-    print('-----------------', request.POST)
     if request.method == 'POST':
         data = {
             'timestamp': datetime.utcnow(),
